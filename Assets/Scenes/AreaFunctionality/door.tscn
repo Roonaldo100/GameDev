@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://beiayc2c170b"]
+[gd_scene load_steps=4 format=3 uid="uid://beiayc2c170b"]
 
+[ext_resource type="Script" uid="uid://vrnflxy6mg2k" path="res://Assets/Scenes/AreaFunctionality/door.gd" id="1_3ka2f"]
 [ext_resource type="Texture2D" uid="uid://dbyuj80y3g1ry" path="res://Assets/Sprites/Dungeon Tile Set.png" id="1_8tqrq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tdxg0"]
@@ -8,6 +9,7 @@ size = Vector2(12, 28)
 [node name="Door" type="Area2D"]
 z_index = -1
 position = Vector2(0, 10)
+script = ExtResource("1_3ka2f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -17)
@@ -18,3 +20,5 @@ region_rect = Rect2(208, 160, 16, 32)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_tdxg0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
