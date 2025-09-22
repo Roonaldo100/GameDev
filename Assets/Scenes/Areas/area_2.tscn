@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpw2sofe2neea"]
+
+[ext_resource type="PackedScene" uid="uid://dt28rtp7lwtq0" path="res://Assets/Scenes/AreaFunctionality/area_template.tscn" id="1_nlj1w"]
+
+[node name="Area1" instance=ExtResource("1_nlj1w")]
+
+[node name="TileMap" parent="." index="0"]
+position = Vector2(-1, 0)
+layer_1/tile_data = PackedInt32Array(-262138, 1, 65536)
