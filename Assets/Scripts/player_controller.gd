@@ -3,7 +3,7 @@ class_name PlayerController
 
 @export var speed = 10 #export variables allow for editting of values in inspector
 @export var jump_power = 10
-@export var hurt_player : AudioStreamPlayer
+#@export var hurt_player : AudioStreamPlayer
 #@export var camera = Camera2D
 
 var speed_multiplier = 30

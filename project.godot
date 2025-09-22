@@ -11,13 +11,18 @@ config_version=5
 [application]
 
 config/name="LessonsLearned1"
-run/main_scene="uid://dt28rtp7lwtq0"
+run/main_scene="uid://g26ake3qnmfi"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
 
 GameManager="*res://Assets/Scripts/game_manager.gd"
+
+[layer_names]
+
+2d_physics/layer_1="Player"
+2d_physics/layer_2="Ground"
 
 [rendering]
 

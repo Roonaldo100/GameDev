@@ -7,3 +7,8 @@
 [node name="TileMap" parent="." index="0"]
 position = Vector2(-1, 0)
 layer_1/tile_data = PackedInt32Array(-262138, 1, 65536)
+
+[node name="PlayerStartPosition" parent="." index="1"]
+position = Vector2(-52, -95)
+
+[connection signal="body_entered" from="TileMap/Door" to="TileMap/Door" method="_on_body_entered"]

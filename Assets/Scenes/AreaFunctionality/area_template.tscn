@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://dt28rtp7lwtq0"]
+[gd_scene load_steps=6 format=3 uid="uid://dt28rtp7lwtq0"]
 
 [ext_resource type="Texture2D" uid="uid://dbyuj80y3g1ry" path="res://Assets/Sprites/Dungeon Tile Set.png" id="1_uidp5"]
-[ext_resource type="PackedScene" uid="uid://f5wfobepsten" path="res://Assets/Scenes/player.tscn" id="2_3uyhe"]
 [ext_resource type="PackedScene" uid="uid://beiayc2c170b" path="res://Assets/Scenes/AreaFunctionality/door.tscn" id="3_voxrf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3uyhe"]
@@ -199,7 +198,7 @@ resource_name = "Door"
 scenes/1/scene = ExtResource("3_voxrf")
 
 [sub_resource type="TileSet" id="TileSet_8wi1m"]
-physics_layer_0/collision_layer = 1
+physics_layer_0/collision_layer = 2
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Ground 0"
 terrain_set_0/terrain_0/color = Color(0.6383187, 0.9032466, 0.99999994, 1)
@@ -216,5 +215,7 @@ layer_0/tile_data = PackedInt32Array(-196601, 196608, 1, 65542, 131072, 2, 6, 13
 layer_1/name = "Door2"
 layer_1/tile_data = PackedInt32Array(-262144, 1, 65536)
 
-[node name="Node2D" parent="." instance=ExtResource("2_3uyhe")]
-position = Vector2(-51, -62)
+[node name="PlayerStartPosition" type="Node2D" parent="." groups=["player_start_position"]]
+position = Vector2(-50, -55)
+
+[connection signal="body_entered" from="TileMap/Door" to="TileMap/Door" method="_on_body_entered"]

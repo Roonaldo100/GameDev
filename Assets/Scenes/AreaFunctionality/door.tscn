@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://beiayc2c170b"]
 
-[ext_resource type="Script" uid="uid://vrnflxy6mg2k" path="res://Assets/Scenes/AreaFunctionality/door.gd" id="1_3ka2f"]
+[ext_resource type="Script" uid="uid://vrnflxy6mg2k" path="res://Assets/Scripts/door.gd" id="1_3ka2f"]
 [ext_resource type="Texture2D" uid="uid://dbyuj80y3g1ry" path="res://Assets/Sprites/Dungeon Tile Set.png" id="1_8tqrq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tdxg0"]
