@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://f5wfobepsten"]
+[gd_scene load_steps=10 format=3 uid="uid://f5wfobepsten"]
 
 [ext_resource type="Texture2D" uid="uid://bmf7esxnma53c" path="res://Assets/Sprites/Soldier.png" id="1_6cd4h"]
 [ext_resource type="Script" uid="uid://4pogbiulel7p" path="res://Assets/Scripts/player_controller.gd" id="1_7dd06"]
@@ -67,10 +67,28 @@ tracks/0/keys = {
 "values": [Rect2(24, 128, 48, 40), Rect2(124, 128, 48, 40), Rect2(224, 128, 48, 40), Rect2(324, 128, 48, 40), Rect2(424, 128, 48, 40), Rect2(524, 128, 48, 40), Rect2(624, 128, 48, 40), Rect2(724, 128, 48, 40)]
 }
 
+[sub_resource type="Animation" id="Animation_38rej"]
+resource_name = "sword"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerAnimator/Sprite2D:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(24, 228, 48, 40), Rect2(124, 228, 48, 40), Rect2(224, 228, 48, 40), Rect2(324, 228, 48, 40), Rect2(424, 228, 48, 40), Rect2(524, 228, 48, 40)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c3tg1"]
 _data = {
 &"RESET": SubResource("Animation_23lac"),
 &"idle": SubResource("Animation_t1xgp"),
+&"sword": SubResource("Animation_38rej"),
 &"walk": SubResource("Animation_w3t24")
 }
 
