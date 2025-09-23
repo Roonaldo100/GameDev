@@ -19,11 +19,11 @@ func _input(event):
 		# Handle jump.
 	if event.is_action_pressed("ui_accept") and is_on_floor():
 		velocity.y = jump_power * jump_multiplier #handle jumping
-	#if event.is_action_pressed("move_down"):
-		#set_collision_mask_value(10, false)
-	#else:
-		#set_collision_mask_value(10, true) #allows player to move down throughh 1 way platforms by disabling physics on these
-	#
+	if event.is_action_pressed("move_down"):
+		set_collision_mask_value(3, false)
+	else:
+		set_collision_mask_value(3, true) #allows player to move down throughh 1 way platforms by disabling physics on these
+	
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
