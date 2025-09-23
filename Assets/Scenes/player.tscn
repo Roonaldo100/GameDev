@@ -78,9 +78,10 @@ _data = {
 radius = 7.0
 height = 18.0
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sword") groups=["player"]]
 collision_mask = 6
 script = ExtResource("1_7dd06")
+sword = NodePath("Rays/Sword")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3.695, 3.695)
@@ -107,3 +108,11 @@ sprite = NodePath("../Sprite2D")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 0)
 shape = SubResource("CapsuleShape2D_7dd06")
+
+[node name="Rays" type="Node2D" parent="."]
+
+[node name="Sword" type="RayCast2D" parent="Rays"]
+position = Vector2(10, 4)
+target_position = Vector2(10, 0)
+collision_mask = 8
+hit_from_inside = true

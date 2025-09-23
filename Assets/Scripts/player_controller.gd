@@ -1,49 +1,62 @@
 extends CharacterBody2D
 class_name PlayerController
 
-@export var speed = 10 #export variables allow for editting of values in inspector
+@export var speed = 10 #export variables allow for editing in inspector
 @export var jump_power = 10
-#@export var hurt_player : AudioStreamPlayer
-#@export var camera = Camera2D
+@export var sword : RayCast2D
 
 var speed_multiplier = 30
 var jump_multiplier = -30
-var direction = 10
-
-
-
-#const SPEED = 300.0
-#const JUMP_VELOCITY = -400.0
+var direction = 1 #Direction allows for 0, while facing does not
+var facing = 1  # 1 = right, -1 = left
+var sword_attacking = false
+var sword_attack_timer : float = 0.0
+var sword_attack_time : float = 0.2
 
 func _input(event):
-		# Handle jump.
+	# Handle jump
 	if event.is_action_pressed("ui_accept") and is_on_floor():
-		velocity.y = jump_power * jump_multiplier #handle jumping
+		velocity.y = jump_power * jump_multiplier
+	
+	# One-way platforms
 	if event.is_action_pressed("move_down"):
 		set_collision_mask_value(3, false)
 	else:
-		set_collision_mask_value(3, true) #allows player to move down throughh 1 way platforms by disabling physics on these
-	
+		set_collision_mask_value(3, true)
+
+	# Sword attack
+	if event.is_action_pressed("sword"):
+		sword_attacking = true
+		sword_attack_timer = sword_attack_time
 
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
+	# Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta 
 
+	# Sword attack handling
+	if sword_attacking:
+		if sword.is_colliding():
+			var hit = sword.get_collider()
+			if hit and hit.is_in_group("enemy"):
+				print("Enemy hit!")
+				sword_attacking = false
+		sword_attack_timer -= delta
+		if sword_attack_timer <= 0.0:
+			sword_attacking = false
 
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
+	# Movement input
 	direction = Input.get_axis("ui_left", "ui_right")
-	if direction:
+	if direction != 0:
+		facing = direction  # update facing only when moving
 		velocity.x = direction * speed * speed_multiplier
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed * speed_multiplier)
 
+	# Sword always in front of player facing
+	sword.target_position = Vector2(20 * facing, 0)
+
 	move_and_slide()
 	
 func teleport_to_location(new_location):
-	#camera.smoothing.enabled = false
 	position = new_location
-	#await get_tree().physics_frame
-	#camera.smoothing.enabled = true
