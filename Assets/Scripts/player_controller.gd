@@ -13,6 +13,7 @@ var sword_attacking = false
 var sword_attack_timer : float = 0.0
 var sword_attack_time : float = 0.5
 var sword_hit_registered = false
+var sword_damage = 10
 
 func _input(event):
 	if event.is_action_pressed("ui_accept") and is_on_floor():
@@ -50,6 +51,7 @@ func _physics_process(delta: float) -> void:
 			if hit and hit.is_in_group("enemy"):
 				print("Enemy hit!")
 				sword_hit_registered = true  # only hit once this swing
+				hit.take_damage(sword_damage)
 
 		sword_attack_timer -= delta
 		if sword_attack_timer <= 0.0:

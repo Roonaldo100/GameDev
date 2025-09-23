@@ -7,8 +7,10 @@ class_name EnemyController
 @export var direction: int = 1  # 1 = right, -1 = left
 
 var speed_multiplier: float = 30.0
+var HP =  10
 
 var edge_cooldown: float = 0.0  # Prevent rapid direction switching
+	
 
 func _physics_process(delta: float) -> void:
 	check_for_turn(delta)
@@ -22,6 +24,7 @@ func _physics_process(delta: float) -> void:
 
 	# Apply movement
 	move_and_slide()
+	check_death()
 
 func check_for_turn(delta: float) -> void:
 	if edge_cooldown > 0.0:
@@ -41,3 +44,10 @@ func check_for_turn(delta: float) -> void:
 		direction *= -1
 		edge_cooldown = 0.2  # debounce
 		
+func take_damage(damage_amount):
+	HP -= damage_amount
+	
+
+func check_death():
+	if HP <= 0:
+		queue_free()
