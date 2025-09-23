@@ -31,7 +31,7 @@ func check_for_turn(delta: float) -> void:
 	# Reposition the RayCast2D node itself to be in front of the enemy
 	var offset_x = 10.0 * direction
 	edge_ray.position.x = offset_x
-	edge_ray.target_position = Vector2(0, 20.0)  # x postition, y position
+	edge_ray.target_position = Vector2(0, 10.0)  # x postition, y position
 	wall_ray.target_position = Vector2(10.0 * direction, 0.0)
 
 	if is_on_floor() and not edge_ray.is_colliding():

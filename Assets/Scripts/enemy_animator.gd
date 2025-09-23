@@ -11,6 +11,4 @@ func _process(delta):
 		sprite.flip_h = true
 		
 	if abs(enemy_controller.velocity.x) > 0:
-		animation_player.play("move")
-	else:
-		animation_player.play("idle")
+		animation_player.play("walk")
