@@ -8,6 +8,7 @@ var player: PlayerController
 var HP: int = 10
 var keys: int = 0
 var keys_required: int = 1
+var game_is_resetting: bool = false
 
 func _ready():
 	#Allow global access of base of gameplay for persistence
@@ -24,6 +25,7 @@ func next_area():
 	
 	
 func load_area(area_number : int):
+	reset_keys()
 	var full_path = area_path + "area_" + str(area_number) + ".tscn"
 	#get_tree().change_scene_to_file(full_path) #tempory solution before refactoring to allow player change between scenes
 	var scene = load(full_path) as PackedScene
@@ -46,5 +48,15 @@ func add_key():
 		var door = get_tree().get_first_node_in_group("area_exits") as AreaExit
 		door.open()
 	
+func reset_keys():
+	keys = 0
 
+func game_over():
+	if game_is_resetting:
+		return # prevents multiple triggers
+	game_is_resetting = true
+	HP = 3
+	current_area = 1
+	await load_area(current_area)
+	game_is_resetting = false
 	

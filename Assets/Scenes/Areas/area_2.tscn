@@ -1,14 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://bpw2sofe2neea"]
+[gd_scene load_steps=3 format=3 uid="uid://bpw2sofe2neea"]
 
 [ext_resource type="PackedScene" uid="uid://dt28rtp7lwtq0" path="res://Assets/Scenes/AreaFunctionality/area_template.tscn" id="1_nlj1w"]
+[ext_resource type="PackedScene" uid="uid://2oor6y7b1il5" path="res://Assets/Scenes/slime.tscn" id="2_y4hc0"]
 
 [node name="Area1" instance=ExtResource("1_nlj1w")]
-
-[node name="TileMap" parent="." index="0"]
-position = Vector2(-1, 0)
-layer_1/tile_data = PackedInt32Array(-262138, 1, 65536)
 
 [node name="PlayerStartPosition" parent="." index="1"]
 position = Vector2(-52, -95)
 
-[connection signal="body_entered" from="TileMap/Door" to="TileMap/Door" method="_on_body_entered"]
+[node name="Enemy" parent="." index="3" instance=ExtResource("2_y4hc0")]
+position = Vector2(20, -61)
+direction = -1
+
+[connection signal="body_entered" from="TileMap2/Door" to="TileMap2/Door" method="_on_body_entered"]
