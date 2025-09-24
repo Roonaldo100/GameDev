@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://2oor6y7b1il5"]
+[gd_scene load_steps=10 format=3 uid="uid://2oor6y7b1il5"]
 
 [ext_resource type="Script" uid="uid://b035iuu7nwh7l" path="res://Assets/Scripts/enemy_controller.gd" id="1_fqgy7"]
 [ext_resource type="Texture2D" uid="uid://di26ehvskabb5" path="res://Assets/Sprites/Slime1_Walk_full.png" id="1_jc4hl"]
 [ext_resource type="Script" uid="uid://cgq07yprh2pn3" path="res://Assets/Scripts/enemy_animator.gd" id="2_pj667"]
+[ext_resource type="Texture2D" uid="uid://brvpu424j5u5q" path="res://Assets/Sprites/Slime1_Death_full.png" id="4_pj667"]
 
 [sub_resource type="Animation" id="Animation_fqgy7"]
 resource_name = "walk"
@@ -12,7 +13,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/path = NodePath("Walking:region_rect")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -27,7 +28,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/path = NodePath("Walking:region_rect")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -36,30 +37,61 @@ tracks/0/keys = {
 "update": 0,
 "values": [Rect2(16, 208, 32, 32)]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Death:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(328, 16, 48, 32)]
+}
+
+[sub_resource type="Animation" id="Animation_pj667"]
+resource_name = "death"
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Death:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(328, 16, 48, 32), Rect2(392, 16, 48, 32), Rect2(456, 16, 48, 32), Rect2(520, 16, 48, 32), Rect2(584, 16, 48, 32)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pj667"]
 _data = {
 &"RESET": SubResource("Animation_6lmee"),
+&"death": SubResource("Animation_pj667"),
 &"walk": SubResource("Animation_fqgy7")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qp8j0"]
 size = Vector2(11, 10)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("edge_ray", "wall_ray") groups=["enemy"]]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("edge_ray", "wall_ray", "animator") groups=["enemy"]]
 collision_layer = 8
 collision_mask = 6
 script = ExtResource("1_fqgy7")
 edge_ray = NodePath("Rays/EdgeRay")
 wall_ray = NodePath("Rays/WallRay")
+animator = NodePath("EnemyAnimator")
 
-[node name="EnemyAnimator" type="Node2D" parent="." node_paths=PackedStringArray("enemy_controller", "animation_player", "sprite")]
+[node name="EnemyAnimator" type="Node2D" parent="." node_paths=PackedStringArray("enemy_controller", "animation_player", "walk_sprite", "death_sprite")]
 script = ExtResource("2_pj667")
 enemy_controller = NodePath("..")
 animation_player = NodePath("AnimationPlayer")
-sprite = NodePath("Sprite2D")
+walk_sprite = NodePath("Walking")
+death_sprite = NodePath("Death")
 
-[node name="Sprite2D" type="Sprite2D" parent="EnemyAnimator"]
+[node name="Walking" type="Sprite2D" parent="EnemyAnimator"]
 texture = ExtResource("1_jc4hl")
 region_enabled = true
 region_rect = Rect2(16, 208, 32, 32)
@@ -68,6 +100,11 @@ region_rect = Rect2(16, 208, 32, 32)
 libraries = {
 &"": SubResource("AnimationLibrary_pj667")
 }
+
+[node name="Death" type="Sprite2D" parent="EnemyAnimator"]
+texture = ExtResource("4_pj667")
+region_enabled = true
+region_rect = Rect2(328, 16, 48, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 1)
@@ -84,3 +121,5 @@ collision_mask = 6
 position = Vector2(15, 7)
 target_position = Vector2(0, 7)
 collision_mask = 6
+
+[connection signal="animation_finished" from="EnemyAnimator/AnimationPlayer" to="EnemyAnimator" method="_on_animation_player_animation_finished"]

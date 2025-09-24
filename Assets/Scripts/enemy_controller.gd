@@ -5,25 +5,24 @@ class_name EnemyController
 @export var edge_ray: RayCast2D
 @export var wall_ray: RayCast2D
 @export var direction: int = 1  # 1 = right, -1 = left
+@export var animator: Node2D  # reference to EnemyAnimator, not AnimationPlayer
 
 var speed_multiplier: float = 30.0
-var HP =  10
-
+var HP: int = 10
 var edge_cooldown: float = 0.0  # Prevent rapid direction switching
-	
 
 func _physics_process(delta: float) -> void:
-	check_for_turn(delta)
+	if HP > 0:
+		check_for_turn(delta)
 
-	# Apply gravity
-	if not is_on_floor():
-		velocity.y += get_gravity().y * delta 
-	
-	# Set horizontal movement
-	velocity.x = direction * speed * speed_multiplier
+		# Apply gravity
+		if not is_on_floor():
+			velocity.y += get_gravity().y * delta 
 
-	# Apply movement
-	move_and_slide()
+		# Movement
+		velocity.x = direction * speed * speed_multiplier
+		move_and_slide()
+
 	check_death()
 
 func check_for_turn(delta: float) -> void:
@@ -31,10 +30,9 @@ func check_for_turn(delta: float) -> void:
 		edge_cooldown -= delta
 		return
 
-	# Reposition the RayCast2D node itself to be in front of the enemy
 	var offset_x = 10.0 * direction
 	edge_ray.position.x = offset_x
-	edge_ray.target_position = Vector2(0, 10.0)  # x postition, y position
+	edge_ray.target_position = Vector2(0, 10.0)
 	wall_ray.target_position = Vector2(10.0 * direction, 0.0)
 
 	if is_on_floor() and not edge_ray.is_colliding():
@@ -42,12 +40,12 @@ func check_for_turn(delta: float) -> void:
 		edge_cooldown = 0.2
 	if wall_ray.is_colliding():
 		direction *= -1
-		edge_cooldown = 0.2  # debounce
-		
-func take_damage(damage_amount):
-	HP -= damage_amount
-	
+		edge_cooldown = 0.2
 
-func check_death():
+func take_damage(damage_amount: int) -> void:
+	HP -= damage_amount
+
+func check_death() -> void:
 	if HP <= 0:
-		queue_free()
+		animator.die_animation()
+		# queue_free will now happen after the animation finishes
