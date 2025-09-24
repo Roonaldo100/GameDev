@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dt28rtp7lwtq0"]
+[gd_scene load_steps=7 format=3 uid="uid://dt28rtp7lwtq0"]
 
 [ext_resource type="Texture2D" uid="uid://dbyuj80y3g1ry" path="res://Assets/Sprites/Dungeon Tile Set.png" id="1_uidp5"]
+[ext_resource type="PackedScene" uid="uid://5wegqpkg3paw" path="res://Assets/Scenes/key.tscn" id="3_apmb3"]
 [ext_resource type="PackedScene" uid="uid://beiayc2c170b" path="res://Assets/Scenes/AreaFunctionality/door.tscn" id="3_voxrf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3uyhe"]
@@ -248,4 +249,5 @@ layer_1/tile_data = PackedInt32Array(-262138, 1, 65536)
 [node name="PlayerStartPosition" type="Node2D" parent="." groups=["player_start_position"]]
 position = Vector2(-46, -67)
 
-[connection signal="body_entered" from="TileMap2/@Area2D@50269" to="TileMap2/@Area2D@50269" method="_on_body_entered"]
+[node name="Key" parent="." instance=ExtResource("3_apmb3")]
+position = Vector2(-34, -56)

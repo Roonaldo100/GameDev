@@ -15,4 +15,7 @@ position = Vector2(-24, -72)
 [node name="Enemy" parent="." index="2" instance=ExtResource("2_3uyhe")]
 position = Vector2(8, -288)
 
+[node name="Key" parent="." index="3"]
+position = Vector2(400, -64)
+
 [connection signal="body_entered" from="TileMap2/Door" to="TileMap2/Door" method="_on_body_entered"]

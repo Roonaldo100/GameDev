@@ -1,7 +1,7 @@
 extends Area2D
 class_name AreaExit
 
-var is_open = true
+var is_open = false
 
 func _ready():
 	pass

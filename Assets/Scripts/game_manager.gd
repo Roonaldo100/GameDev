@@ -5,6 +5,9 @@ var current_area = 1
 var area_path = "res://Assets/Scenes/Areas/"
 var area_container : Node2D
 var player: PlayerController
+var HP: int = 10
+var keys: int = 0
+var keys_required: int = 1
 
 func _ready():
 	#Allow global access of base of gameplay for persistence
@@ -36,6 +39,13 @@ func load_area(area_number : int):
 	#Allows for player to not be manually put into each scene
 	var player_start_pos = get_tree().get_first_node_in_group("player_start_position") as Node2D
 	player.teleport_to_location(player_start_pos.position)
+	
+func add_key():
+	keys += 1
+	if keys >= keys_required:
+		var door = get_tree().get_first_node_in_group("area_exits") as AreaExit
+		door.open()
+	
 		
 	
 	

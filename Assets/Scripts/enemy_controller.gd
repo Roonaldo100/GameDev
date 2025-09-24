@@ -5,10 +5,10 @@ class_name EnemyController
 @export var edge_ray: RayCast2D
 @export var wall_ray: RayCast2D
 @export var direction: int = 1  # 1 = right, -1 = left
-@export var animator: Node2D  # reference to EnemyAnimator, not AnimationPlayer
+@export var animator: Node2D  
 
 var speed_multiplier: float = 30.0
-var HP: int = 10
+var HP: int = 20
 var edge_cooldown: float = 0.0  # Prevent rapid direction switching
 
 func _physics_process(delta: float) -> void:

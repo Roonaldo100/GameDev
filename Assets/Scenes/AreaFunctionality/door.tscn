@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tdxg0"]
 size = Vector2(12, 28)
 
-[node name="Door" type="Area2D"]
+[node name="Door" type="Area2D" groups=["area_exits"]]
 z_index = -1
 position = Vector2(0, 10)
 script = ExtResource("1_3ka2f")

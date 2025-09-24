@@ -7,11 +7,12 @@ class_name PlayerController
 
 var speed_multiplier = 30
 var jump_multiplier = -30
-var direction = 1
+var direction = 1 #can be 0, unlike facing
 var facing = 1
-var sword_attacking = false
-var sword_attack_timer : float = 0.0
-var sword_attack_time : float = 0.5
+#Sword vars
+var sword_attacking = false #Set to true on attack press
+var sword_attack_timer : float = 0.0 #timer for sword collision active
+var sword_attack_time : float = 0.5 #Max time sword collision is active
 var sword_hit_registered = false
 var sword_damage = 10
 
@@ -24,7 +25,7 @@ func _input(event):
 	else:
 		set_collision_mask_value(3, true)
 
-	if event.is_action_pressed("sword") and not sword_attacking:
+	if event.is_action_pressed("sword") and not sword_attacking: #prevent call to if already attacking
 		sword_attacking = true
 		sword_attack_timer = sword_attack_time
 		sword_hit_registered = false  # reset hit flag for new swing
