@@ -4,12 +4,16 @@
 [ext_resource type="Script" uid="uid://4pogbiulel7p" path="res://Assets/Scripts/player_controller.gd" id="1_7dd06"]
 [ext_resource type="Script" uid="uid://ba5taudgtwck5" path="res://Assets/Scenes/player_animator.gd" id="3_38rej"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7dd06"]
+radius = 7.0
+height = 18.0
+
 [sub_resource type="Animation" id="Animation_23lac"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerAnimator/Sprite2D:region_rect")
+tracks/0/path = NodePath("PivotPoint/PlayerAnimator/Sprite2D:region_rect")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -17,6 +21,39 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Rect2(24, 128, 48, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_t1xgp"]
+resource_name = "idle"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PivotPoint/PlayerAnimator/Sprite2D:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Rect2(24, 28, 48, 40), Rect2(24, 28, 48, 40)]
+}
+
+[sub_resource type="Animation" id="Animation_38rej"]
+resource_name = "sword"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PivotPoint/PlayerAnimator/Sprite2D:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(24, 228, 48, 40), Rect2(124, 228, 48, 40), Rect2(224, 228, 48, 40), Rect2(324, 228, 48, 40), Rect2(424, 228, 48, 40), Rect2(524, 228, 48, 40)]
 }
 
 [sub_resource type="Animation" id="Animation_w3t24"]
@@ -27,7 +64,7 @@ step = 0.25
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerAnimator/Sprite2D:region_rect")
+tracks/0/path = NodePath("PivotPoint/PlayerAnimator/Sprite2D:region_rect")
 tracks/0/interp = 0
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -35,39 +72,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Rect2(24, 128, 48, 40), Rect2(124, 128, 48, 40), Rect2(224, 128, 48, 40), Rect2(324, 128, 48, 40), Rect2(424, 128, 48, 40), Rect2(524, 128, 48, 40), Rect2(624, 128, 48, 40), Rect2(724, 128, 48, 40)]
-}
-
-[sub_resource type="Animation" id="Animation_38rej"]
-resource_name = "sword"
-length = 0.5
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerAnimator/Sprite2D:region_rect")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Rect2(24, 228, 48, 40), Rect2(124, 228, 48, 40), Rect2(224, 228, 48, 40), Rect2(324, 228, 48, 40), Rect2(424, 228, 48, 40), Rect2(524, 228, 48, 40)]
-}
-
-[sub_resource type="Animation" id="Animation_t1xgp"]
-resource_name = "idle"
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerAnimator/Sprite2D:region_rect")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Rect2(24, 28, 48, 40), Rect2(24, 28, 48, 40)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c3tg1"]
@@ -78,43 +82,43 @@ _data = {
 &"walk": SubResource("Animation_w3t24")
 }
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7dd06"]
-radius = 7.0
-height = 18.0
-
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sword") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sword", "pivot_point") groups=["player"]]
 collision_mask = 14
 script = ExtResource("1_7dd06")
-sword = NodePath("Rays/Sword")
+sword = NodePath("PivotPoint/Rays/Sword")
+pivot_point = NodePath("PivotPoint")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(3.695, 3.695)
 
-[node name="PlayerAnimator" type="Node2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.09, 0)
+shape = SubResource("CapsuleShape2D_7dd06")
 
-[node name="Sprite2D" type="Sprite2D" parent="PlayerAnimator"]
+[node name="PivotPoint" type="Node2D" parent="."]
+
+[node name="PlayerAnimator" type="Node2D" parent="PivotPoint"]
+position = Vector2(-1.575, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="PivotPoint/PlayerAnimator"]
 texture = ExtResource("1_6cd4h")
 region_enabled = true
 region_rect = Rect2(24, 128, 48, 40)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="PlayerAnimator" node_paths=PackedStringArray("player_controller", "animation_player", "sprite")]
-root_node = NodePath("../..")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PivotPoint/PlayerAnimator" node_paths=PackedStringArray("player_controller", "animation_player", "sprite")]
+root_node = NodePath("../../..")
 libraries = {
 &"": SubResource("AnimationLibrary_c3tg1")
 }
 speed_scale = 2.0
 script = ExtResource("3_38rej")
-player_controller = NodePath("../..")
+player_controller = NodePath("../../..")
 animation_player = NodePath(".")
 sprite = NodePath("../Sprite2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, 0)
-shape = SubResource("CapsuleShape2D_7dd06")
+[node name="Rays" type="Node2D" parent="PivotPoint"]
 
-[node name="Rays" type="Node2D" parent="."]
-
-[node name="Sword" type="RayCast2D" parent="Rays"]
+[node name="Sword" type="RayCast2D" parent="PivotPoint/Rays"]
 position = Vector2(10, 4)
 target_position = Vector2(10, 0)
 collision_mask = 8

@@ -6,24 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://brvpu424j5u5q" path="res://Assets/Sprites/Slime1_Death_full.png" id="4_pj667"]
 [ext_resource type="Script" uid="uid://bcp3sjmms7neb" path="res://Assets/Scripts/enemy_collision.gd" id="5_qp8j0"]
 
-[sub_resource type="Animation" id="Animation_fqgy7"]
-resource_name = "walk"
-length = 0.75
-loop_mode = 1
-step = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Walking:region_rect")
-tracks/0/interp = 0
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Rect2(16, 208, 32, 32), Rect2(80, 208, 32, 32), Rect2(208, 208, 32, 32), Rect2(208, 208, 32, 32)]
-}
-
 [sub_resource type="Animation" id="Animation_6lmee"]
 length = 0.001
 tracks/0/type = "value"
@@ -67,6 +49,24 @@ tracks/0/keys = {
 "values": [Rect2(328, 16, 48, 32), Rect2(392, 16, 48, 32), Rect2(456, 16, 48, 32), Rect2(520, 16, 48, 32), Rect2(584, 16, 48, 32)]
 }
 
+[sub_resource type="Animation" id="Animation_fqgy7"]
+resource_name = "walk"
+length = 0.75
+loop_mode = 1
+step = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Walking:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Rect2(16, 208, 32, 32), Rect2(80, 208, 32, 32), Rect2(208, 208, 32, 32), Rect2(208, 208, 32, 32)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pj667"]
 _data = {
 &"RESET": SubResource("Animation_6lmee"),
@@ -84,57 +84,56 @@ size = Vector2(12, 10)
 collision_layer = 8
 collision_mask = 6
 script = ExtResource("1_fqgy7")
-edge_ray = NodePath("Rays/EdgeRay")
-wall_ray = NodePath("Rays/WallRay")
-animator = NodePath("EnemyAnimator")
+edge_ray = NodePath("PivotPoint/EnemyAnimator/Rays/EdgeRay")
+wall_ray = NodePath("PivotPoint/EnemyAnimator/Rays/WallRay")
+animator = NodePath("PivotPoint/EnemyAnimator")
 
-[node name="EnemyAnimator" type="Node2D" parent="." node_paths=PackedStringArray("enemy_controller", "animation_player", "walk_sprite", "death_sprite")]
+[node name="PivotPoint" type="Node2D" parent="."]
+
+[node name="EnemyAnimator" type="Node2D" parent="PivotPoint" node_paths=PackedStringArray("enemy_controller", "animation_player", "walk_sprite", "death_sprite")]
 script = ExtResource("2_pj667")
-enemy_controller = NodePath("..")
+enemy_controller = NodePath("../..")
 animation_player = NodePath("AnimationPlayer")
 walk_sprite = NodePath("Walking")
 death_sprite = NodePath("Death")
 
-[node name="Walking" type="Sprite2D" parent="EnemyAnimator"]
+[node name="Walking" type="Sprite2D" parent="PivotPoint/EnemyAnimator"]
 texture = ExtResource("1_jc4hl")
 region_enabled = true
 region_rect = Rect2(16, 208, 32, 32)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="EnemyAnimator"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PivotPoint/EnemyAnimator"]
 libraries = {
 &"": SubResource("AnimationLibrary_pj667")
 }
 
-[node name="Death" type="Sprite2D" parent="EnemyAnimator"]
+[node name="Death" type="Sprite2D" parent="PivotPoint/EnemyAnimator"]
 visible = false
 texture = ExtResource("4_pj667")
 region_enabled = true
 region_rect = Rect2(328, 16, 48, 32)
 
-[node name="EnemyCollider" type="CollisionShape2D" parent="."]
-position = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_qp8j0")
+[node name="Rays" type="Node2D" parent="PivotPoint/EnemyAnimator"]
 
-[node name="Rays" type="Node2D" parent="."]
-
-[node name="EdgeRay" type="RayCast2D" parent="Rays"]
+[node name="EdgeRay" type="RayCast2D" parent="PivotPoint/EnemyAnimator/Rays"]
 position = Vector2(15, 0)
 target_position = Vector2(8, 0)
 collision_mask = 6
 
-[node name="WallRay" type="RayCast2D" parent="Rays"]
+[node name="WallRay" type="RayCast2D" parent="PivotPoint/EnemyAnimator/Rays"]
 position = Vector2(15, 7)
 target_position = Vector2(0, 7)
 collision_mask = 6
 
+[node name="EnemyCollider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qp8j0")
+
 [node name="Enemy Hitbox" type="Area2D" parent="."]
-position = Vector2(28, 3)
 script = ExtResource("5_qp8j0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy Hitbox"]
-position = Vector2(-27, -2)
 shape = SubResource("RectangleShape2D_tauvr")
 debug_color = Color(0.7943498, 0, 0.27033335, 0.41960785)
 
-[connection signal="animation_finished" from="EnemyAnimator/AnimationPlayer" to="EnemyAnimator" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="PivotPoint/EnemyAnimator/AnimationPlayer" to="PivotPoint/EnemyAnimator" method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Enemy Hitbox" to="Enemy Hitbox" method="_on_body_entered"]
