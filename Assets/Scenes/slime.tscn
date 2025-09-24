@@ -80,12 +80,13 @@ size = Vector2(11, 10)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tauvr"]
 size = Vector2(12, 10)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("edge_ray", "wall_ray", "animator") groups=["enemy"]]
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("edge_ray", "wall_ray", "pivot_point", "animator") groups=["enemy"]]
 collision_layer = 8
 collision_mask = 6
 script = ExtResource("1_fqgy7")
 edge_ray = NodePath("PivotPoint/EnemyAnimator/Rays/EdgeRay")
 wall_ray = NodePath("PivotPoint/EnemyAnimator/Rays/WallRay")
+pivot_point = NodePath("PivotPoint")
 animator = NodePath("PivotPoint/EnemyAnimator")
 
 [node name="PivotPoint" type="Node2D" parent="."]

@@ -16,11 +16,6 @@ func _process(delta):
 		return  # Don't play walk/idle if dead
 
 	if enemy_controller.HP > 0:
-		# Flip sprite
-		if enemy_controller.direction == 1:
-			walk_sprite.flip_h = false
-		elif enemy_controller.direction == -1:
-			walk_sprite.flip_h = true
 
 		# Walk animation
 		if abs(enemy_controller.velocity.x) > 0:
