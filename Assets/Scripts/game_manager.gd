@@ -46,6 +46,5 @@ func add_key():
 		var door = get_tree().get_first_node_in_group("area_exits") as AreaExit
 		door.open()
 	
-		
-	
+
 	
