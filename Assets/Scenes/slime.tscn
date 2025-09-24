@@ -77,19 +77,32 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qp8j0"]
 size = Vector2(11, 10)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tauvr"]
-size = Vector2(12, 10)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qp8j0"]
+radius = 7.0
+height = 14.0
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("edge_ray", "wall_ray", "pivot_point", "animator") groups=["enemy"]]
 collision_layer = 8
 collision_mask = 6
 script = ExtResource("1_fqgy7")
-edge_ray = NodePath("PivotPoint/EnemyAnimator/Rays/EdgeRay")
-wall_ray = NodePath("PivotPoint/EnemyAnimator/Rays/WallRay")
+edge_ray = NodePath("PivotPoint/Rays/EdgeRay")
+wall_ray = NodePath("PivotPoint/Rays/WallRay")
 pivot_point = NodePath("PivotPoint")
 animator = NodePath("PivotPoint/EnemyAnimator")
 
 [node name="PivotPoint" type="Node2D" parent="."]
+
+[node name="Rays" type="Node2D" parent="PivotPoint"]
+
+[node name="EdgeRay" type="RayCast2D" parent="PivotPoint/Rays"]
+position = Vector2(15, 0)
+target_position = Vector2(8, 0)
+collision_mask = 6
+
+[node name="WallRay" type="RayCast2D" parent="PivotPoint/Rays"]
+position = Vector2(15, 7)
+target_position = Vector2(0, 7)
+collision_mask = 6
 
 [node name="EnemyAnimator" type="Node2D" parent="PivotPoint" node_paths=PackedStringArray("enemy_controller", "animation_player", "walk_sprite", "death_sprite")]
 script = ExtResource("2_pj667")
@@ -114,26 +127,15 @@ texture = ExtResource("4_pj667")
 region_enabled = true
 region_rect = Rect2(328, 16, 48, 32)
 
-[node name="Rays" type="Node2D" parent="PivotPoint/EnemyAnimator"]
-
-[node name="EdgeRay" type="RayCast2D" parent="PivotPoint/EnemyAnimator/Rays"]
-position = Vector2(15, 0)
-target_position = Vector2(8, 0)
-collision_mask = 6
-
-[node name="WallRay" type="RayCast2D" parent="PivotPoint/EnemyAnimator/Rays"]
-position = Vector2(15, 7)
-target_position = Vector2(0, 7)
-collision_mask = 6
-
 [node name="EnemyCollider" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_qp8j0")
 
 [node name="Enemy Hitbox" type="Area2D" parent="."]
+collision_layer = 8
 script = ExtResource("5_qp8j0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy Hitbox"]
-shape = SubResource("RectangleShape2D_tauvr")
+shape = SubResource("CapsuleShape2D_qp8j0")
 debug_color = Color(0.7943498, 0, 0.27033335, 0.41960785)
 
 [connection signal="animation_finished" from="PivotPoint/EnemyAnimator/AnimationPlayer" to="PivotPoint/EnemyAnimator" method="_on_animation_player_animation_finished"]
