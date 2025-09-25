@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dipvubj7lpqch"]
+
+[ext_resource type="Texture2D" uid="uid://d2yrsqwi0ubx0" path="res://Assets/Sprites/Coin.png" id="1_71ymp"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sprite2D" type="Sprite2D" parent="TextureRect"]
+position = Vector2(18, 16)
+texture = ExtResource("1_71ymp")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
