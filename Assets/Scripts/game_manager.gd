@@ -26,6 +26,7 @@ func next_area():
 	load_area(current_area)
 	
 func load_area(area_number : int):
+	hud.update_hp_label(HP)
 	reset_keys()
 	reset_coins()
 	var full_path = area_path + "area_" + str(area_number) + ".tscn"

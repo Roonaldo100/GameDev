@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://d2yrsqwi0ubx0" path="res://Assets/Sprites/Coin.png" id="1_71ymp"]
 [ext_resource type="Script" uid="uid://ddf4lxcpowwth" path="res://Assets/Scenes/hud.gd" id="1_th0pt"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("coin_amount_label") groups=["HUD"]]
+[node name="Control" type="Control" node_paths=PackedStringArray("coin_amount_label", "HP_amount_label") groups=["HUD"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,6 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_th0pt")
 coin_amount_label = NodePath("CoinTexture/CoinAmount")
+HP_amount_label = NodePath("HPLabel")
 
 [node name="CoinTexture" type="TextureRect" parent="."]
 layout_mode = 0
@@ -31,3 +32,13 @@ offset_top = 3.0
 offset_right = 57.0
 offset_bottom = 26.0
 text = "X0"
+
+[node name="HPLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "HP: 3"
