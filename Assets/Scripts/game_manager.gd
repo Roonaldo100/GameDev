@@ -12,11 +12,13 @@ var coins: int = 0
 #Scene Vars
 var keys_required: int = 1
 var game_is_resetting: bool = false
+var hud: HUD
 
 func _ready():
 	#Allow global access of base of gameplay for persistence
 	area_container = get_tree().get_first_node_in_group("area_container")
 	player = get_tree().get_first_node_in_group("player")
+	hud = get_tree().get_first_node_in_group("HUD")
 	load_area(starting_area)
 
 func next_area():
@@ -53,6 +55,7 @@ func reset_keys():
 func add_coin():
 	coins += 1
 	print("player coins: " + str(coins))
+	hud.update_coin_label(coins)
 
 func game_over():
 	if game_is_resetting:
