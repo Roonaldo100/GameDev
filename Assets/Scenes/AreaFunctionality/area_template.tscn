@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dt28rtp7lwtq0"]
+[gd_scene load_steps=8 format=3 uid="uid://dt28rtp7lwtq0"]
 
 [ext_resource type="Texture2D" uid="uid://dbyuj80y3g1ry" path="res://Assets/Sprites/Dungeon Tile Set.png" id="1_uidp5"]
 [ext_resource type="PackedScene" uid="uid://5wegqpkg3paw" path="res://Assets/Scenes/key.tscn" id="3_apmb3"]
+[ext_resource type="PackedScene" uid="uid://biw3w30xt70rp" path="res://Assets/Scenes/coin.tscn" id="3_lky5s"]
 [ext_resource type="PackedScene" uid="uid://beiayc2c170b" path="res://Assets/Scenes/AreaFunctionality/door.tscn" id="3_voxrf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3uyhe"]
@@ -224,6 +225,7 @@ texture = ExtResource("1_uidp5")
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_voxrf"]
 resource_name = "Door"
 scenes/1/scene = ExtResource("3_voxrf")
+scenes/2/scene = ExtResource("3_lky5s")
 
 [sub_resource type="TileSet" id="TileSet_8wi1m"]
 physics_layer_0/collision_layer = 2
@@ -251,3 +253,5 @@ position = Vector2(-46, -67)
 
 [node name="Key" parent="." instance=ExtResource("3_apmb3")]
 position = Vector2(-34, -56)
+
+[connection signal="body_entered" from="TileMap2/@Area2D@30761" to="TileMap2/@Area2D@30761" method="_on_body_entered"]

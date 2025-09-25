@@ -4,9 +4,12 @@ var starting_area = 1
 var current_area = 1
 var area_path = "res://Assets/Scenes/Areas/"
 var area_container : Node2D
+#Player Vars
 var player: PlayerController
 var HP: int = 10
 var keys: int = 0
+var coins: int = 0
+#Scene Vars
 var keys_required: int = 1
 var game_is_resetting: bool = false
 
@@ -19,10 +22,6 @@ func _ready():
 func next_area():
 	current_area += 1
 	load_area(current_area)
-	
-
-	
-	
 	
 func load_area(area_number : int):
 	reset_keys()
@@ -50,6 +49,10 @@ func add_key():
 	
 func reset_keys():
 	keys = 0
+	
+func add_coin():
+	coins += 1
+	print("player coins: " + str(coins))
 
 func game_over():
 	if game_is_resetting:
