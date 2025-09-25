@@ -5,6 +5,7 @@ class_name PlayerController
 @export var jump_power = 10
 @export var sword : RayCast2D
 @export var pivot_point : Node2D   # reference to the PivotPoint
+@export var animator : AnimationPlayer
 
 var speed_multiplier = 30
 var jump_multiplier = -30

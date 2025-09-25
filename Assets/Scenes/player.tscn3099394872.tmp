@@ -82,13 +82,12 @@ _data = {
 radius = 7.0
 height = 18.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sword", "pivot_point", "animator") groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("sword", "pivot_point") groups=["player"]]
 collision_mask = 14
 script = ExtResource("1_7dd06")
 speed = 4
 sword = NodePath("PivotPoint/Rays/Sword")
 pivot_point = NodePath("PivotPoint")
-animator = NodePath("PivotPoint/PlayerAnimator/AnimationPlayer")
 
 [node name="PivotPoint" type="Node2D" parent="."]
 
