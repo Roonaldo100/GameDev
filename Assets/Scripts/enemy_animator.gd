@@ -7,6 +7,8 @@ extends Node2D
 
 var dead: bool = false
 
+var hurt_timer = 0.0
+
 func _ready():
 	walk_sprite.visible = true
 	death_sprite.visible = false
@@ -20,6 +22,16 @@ func _process(delta):
 		# Walk animation
 		if abs(enemy_controller.velocity.x) > 0:
 			animation_player.play("walk")
+	
+	if hurt_timer > 0:
+		hurt_timer -= delta  # Decrease timer
+		walk_sprite.modulate = Color(1, 0, 0)  # Change color to red
+		if hurt_timer <= 0:  # When timer ends
+			walk_sprite.modulate = Color(1, 1, 1)  # Reset color to normal (white)
+
+# This method is called to start the hurt animation
+func play_hurt_animation():
+	hurt_timer = 0.3  # Set how long the "hurt" effect lasts
 
 func die_animation():
 	dead = true

@@ -53,6 +53,7 @@ func check_for_turn(delta: float) -> void:
 
 func take_damage(damage_amount: int) -> void:
 	HP -= damage_amount
+	animator.play_hurt_animation()
 
 func check_death() -> void:
 	if HP <= 0:

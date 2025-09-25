@@ -6,7 +6,7 @@ var area_path = "res://Assets/Scenes/Areas/"
 var area_container : Node2D
 #Player Vars
 var player: PlayerController
-var HP: int = 10
+var HP: int = 3
 var keys: int = 0
 var coins: int = 0
 #Scene Vars
@@ -27,6 +27,7 @@ func next_area():
 	
 func load_area(area_number : int):
 	reset_keys()
+	reset_coins()
 	var full_path = area_path + "area_" + str(area_number) + ".tscn"
 	#get_tree().change_scene_to_file(full_path) #tempory solution before refactoring to allow player change between scenes
 	var scene = load(full_path) as PackedScene
@@ -51,6 +52,10 @@ func add_key():
 	
 func reset_keys():
 	keys = 0
+	
+func reset_coins():
+	coins = 0
+	hud.update_coin_label(0)
 	
 func add_coin():
 	coins += 1
