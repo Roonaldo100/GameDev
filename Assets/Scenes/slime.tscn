@@ -78,8 +78,8 @@ _data = {
 size = Vector2(11, 10)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qp8j0"]
-radius = 7.0
-height = 14.0
+radius = 8.0
+height = 16.0
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("edge_ray", "wall_ray", "pivot_point", "animator") groups=["enemy"]]
 collision_layer = 8

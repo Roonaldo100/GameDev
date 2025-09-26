@@ -6,7 +6,7 @@ class_name EnemyController
 @export var wall_ray: RayCast2D
 @export var direction: int = 1  # 1 = right, -1 = left
 @export var pivot_point: Node2D 
-@export var animator: Node2D  
+@export var animator: Node2D 
 
 var speed_multiplier: float = 30.0
 var HP: int = 20
@@ -47,8 +47,6 @@ func check_for_turn(delta: float) -> void:
 	if wall_ray.is_colliding():
 		direction *= -1
 		edge_cooldown = 0.2
-
-
 
 
 func take_damage(damage_amount: int) -> void:

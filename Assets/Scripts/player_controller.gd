@@ -4,6 +4,7 @@ class_name PlayerController
 @export var speed = 10
 @export var jump_power = 10
 @export var sword : RayCast2D
+@export var arrow : RayCast2D
 @export var pivot_point : Node2D   # reference to the PivotPoint
 @export var animator : AnimationPlayer
 
@@ -19,6 +20,14 @@ var sword_attack_time : float = 0.5
 var sword_hit_registered = false
 var sword_damage = 10
 
+#Arrow Vars
+var arrow_attacking = false
+#var arrow_attack_timer : float = 0.0
+#var arrow_attack_time : float = 0.5
+var arrow_hit_registered = false
+var arrow_damage = 5
+var arrow_speed_multiplier = 10
+
 func _input(event):
 	if event.is_action_pressed("ui_accept") and is_on_floor():
 		velocity.y = jump_power * jump_multiplier
@@ -32,6 +41,10 @@ func _input(event):
 		sword_attacking = true
 		sword_attack_timer = sword_attack_time
 		sword_hit_registered = false
+		
+	if event.is_action_pressed("bownarrow") and not arrow_attacking:
+		arrow_attacking = true
+		arrow_hit_registered = false
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -62,6 +75,15 @@ func _physics_process(delta: float) -> void:
 			sword_attacking = false
 			sword_hit_registered = false
 
+	if arrow_attacking:
+		if arrow.is_colliding() and not arrow_hit_registered:
+			var hit = arrow.get_collider()
+			if hit and hit.is_in_group("enemy"):
+				print("Enemy hit!")
+				arrow_hit_registered = true
+				hit.take_damage(arrow_damage)
+		arrow_attacking = false
+		arrow_hit_registered = false
 	move_and_slide()
 
 func teleport_to_location(new_location):

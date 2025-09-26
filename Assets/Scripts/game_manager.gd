@@ -28,7 +28,6 @@ func next_area():
 func load_area(area_number : int):
 	hud.update_hp_label(HP)
 	reset_keys()
-	reset_coins()
 	var full_path = area_path + "area_" + str(area_number) + ".tscn"
 	#get_tree().change_scene_to_file(full_path) #tempory solution before refactoring to allow player change between scenes
 	var scene = load(full_path) as PackedScene
@@ -69,6 +68,7 @@ func game_over():
 	game_is_resetting = true
 	HP = 3
 	current_area = 1
+	reset_coins()
 	await load_area(current_area)
 	game_is_resetting = false
 	
