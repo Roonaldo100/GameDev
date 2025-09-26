@@ -57,5 +57,8 @@ func take_damage(damage_amount: int) -> void:
 
 func check_death() -> void:
 	if HP <= 0:
+		var hitbox_area = get_node("Enemy Hitbox") as Area2D
+		var shape = hitbox_area.get_node("CollisionShape2D") as CollisionShape2D
+		shape.disabled = true
 		animator.die_animation()
 		# queue_free will now happen after the animation finishes
