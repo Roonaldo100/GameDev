@@ -27,6 +27,7 @@ var arrow_attacking = false
 var arrow_hit_registered = false
 var arrow_damage = 5
 var arrow_speed_multiplier = 10
+var arrow_direction = facing
 
 func _input(event):
 	if event.is_action_pressed("ui_accept") and is_on_floor():
@@ -45,6 +46,7 @@ func _input(event):
 	if event.is_action_pressed("bownarrow") and not arrow_attacking:
 		arrow_attacking = true
 		arrow_hit_registered = false
+		arrow_direction = facing
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -75,7 +77,10 @@ func _physics_process(delta: float) -> void:
 			sword_attacking = false
 			sword_hit_registered = false
 
+	#Arrow Attack
+	#add to this code the ability for the arrow to start moving when arrow_is_attacking is true. 
 	if arrow_attacking:
+		# arrow.position = arrow_direction * arrow_speed_multiplier * delta
 		if arrow.is_colliding() and not arrow_hit_registered:
 			var hit = arrow.get_collider()
 			if hit and hit.is_in_group("enemy"):
